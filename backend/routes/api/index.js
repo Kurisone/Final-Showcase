@@ -3,8 +3,11 @@
 const reviewsRouter = require('./reviews.js');
 const spotsRouter = require('./spots.js');
 const usersRouter = require('./users.js');
-const express = require('express')
+const bookingsRouter = require('./bookings.js')
+const reviewImageRouter = require('./reviewImage.js')
+const spotImageRouter = require('./spotImage.js')
 const sessionRouter = require('./session.js');
+const express = require('express')
 
 // --Sequelize imports
 const { User } = require('../../db/models');
@@ -23,6 +26,9 @@ router.use('/session', sessionRouter);
 router.use('/spots', spotsRouter);
 router.use('/users', usersRouter);
 router.use('/reviews', reviewsRouter);
+router.use('/bookings', bookingsRouter);
+router.use('/reviewImage', reviewImageRouter);
+router.use('/spotImage', spotImageRouter);
 
 
 
