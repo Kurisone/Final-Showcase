@@ -1,4 +1,4 @@
-// routes/spots.js
+
 const express = require('express');
 const router = express.Router();
 const { Spot, SpotImage, Review, User } = require('../models');
@@ -19,7 +19,7 @@ const validateSpot = [
   handleValidationErrors,
 ];
 
-// GET /api/spots (Get All Spots)
+// Get All Spots
 router.get('/', async (req, res) => {
   const spots = await Spot.findAll({
     include: [
@@ -54,7 +54,7 @@ router.get('/', async (req, res) => {
   return res.json({ Spots: response });
 });
 
-// GET /api/spots/current (Get Spots Owned by Current User)
+// Get Spots Owned by Current User
 router.get('/current', requireAuth, async (req, res) => {
   const { user } = req;
 
@@ -92,7 +92,7 @@ router.get('/current', requireAuth, async (req, res) => {
   return res.json({ Spots: response });
 });
 
-// GET /api/spots/:spotId (Get Details of a Spot by ID)
+// Get Details of a Spot by ID
 router.get('/:spotId', async (req, res, next) => {
   const { spotId } = req.params;
 
@@ -136,7 +136,7 @@ router.get('/:spotId', async (req, res, next) => {
   return res.json(response);
 });
 
-// POST /api/spots (Create a Spot)
+// Create a Spot
 router.post('/', requireAuth, validateSpot, async (req, res) => {
   const { address, city, state, country, lat, lng, name, description, price } = req.body;
   const { user } = req;
@@ -157,7 +157,7 @@ router.post('/', requireAuth, validateSpot, async (req, res) => {
   return res.status(201).json(spot);
 });
 
-// POST /api/spots/:spotId/images (Add an Image to a Spot)
+// Add an Image to a Spot
 router.post('/:spotId/images', requireAuth, async (req, res, next) => {
   const { spotId } = req.params;
   const { url, preview } = req.body;
@@ -190,7 +190,7 @@ router.post('/:spotId/images', requireAuth, async (req, res, next) => {
   });
 });
 
-// PUT /api/spots/:spotId (Update a Spot)
+// Update a Spot
 router.put('/:spotId', requireAuth, validateSpot, async (req, res, next) => {
   const { spotId } = req.params;
   const { address, city, state, country, lat, lng, name, description, price } = req.body;
@@ -224,7 +224,7 @@ router.put('/:spotId', requireAuth, validateSpot, async (req, res, next) => {
   return res.json(spot);
 });
 
-// DELETE /api/spots/:spotId (Delete a Spot)
+// Delete a Spot
 router.delete('/:spotId', requireAuth, async (req, res, next) => {
   const { spotId } = req.params;
   const { user } = req;
