@@ -1,7 +1,7 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "## Database Schema Design ![db schema](https://github.com/user-attachments/assets/ac69545c-205d-4cf5-88a2-f4782e139fd7)",
+  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -10,8 +10,7 @@
     "start": "per-env",
     "start:development": "nodemon ./bin/www",
     "start:production": "node ./bin/www",
-    "build": "node psql-setup-script.js",
-    "db:reset": "rm-rf ./db/dev.db && npx dotenv sequelize db:migrate && npx dotenv sequelize db:seed:all"
+    "build": "node psql-setup-script.js"
   },
   "keywords": [],
   "author": "",
