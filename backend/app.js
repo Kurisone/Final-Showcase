@@ -1,60 +1,52 @@
-//--Imports--
 const express = require('express');
 require('express-async-errors');
-const routes = require('./routes');
-
-// --Security Imports--
 const morgan = require('morgan');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 const csurf = require('csurf');
 const helmet = require('helmet');
-
-//--Utility Imports--
-const cookieParser = require('cookie-parser');
-const { environment } = require('./config');
 const { ValidationError } = require('sequelize');
-const sequelize = require('./config/database'); // Import the database configuration
 
-const isProduction = environment === 'production';
+const routes = require('./routes');
 
-// --Express--
+const { environment, port } = require('./config');
+const isProduction = environment === 'production'
 const app = express();
 
-// --Middlewares-- 
-app.use(morgan('dev')); // security
-app.use(cookieParser()); // parse cookies from headers
-app.use(express.json()); // allows use of json in req/res
+app.use(morgan('dev'));
+app.use(cookieParser());
+app.use(express.json());
 
-// --Security Middleware--
+// Security Middleware
 if (!isProduction) {
-  // enable cors only in development
-  app.use(cors());
-}
-// helmet helps set a variety of headers to better secure your app
-app.use(
-  helmet.crossOriginResourcePolicy({
-    policy: "cross-origin"
-  })
-);
-// Set the _csrf token and create req.csrfToken method
-app.use(
-  csurf({
-    cookie: {
-      secure: isProduction,
-      sameSite: isProduction && "Lax",
-      httpOnly: true
-    }
-  })
-);
+    // enable cors only in development
+    app.use(cors());
+  }
 
-//-----------Middleware must be used above this line----------
-// --Routes--
-app.use(routes); // Connect all the routes
+  // helmet helps set a variety of headers to better secure your app
+  app.use(
+    helmet.crossOriginResourcePolicy({
+      policy: "cross-origin"
+    })
+  );
 
-// -----ERROR HANDLING----
+
+  // Set the _csurf token and create req.csrfToken method
+  app.use(
+   csurf({
+      cookie: {
+        secure: isProduction,
+        sameSite: isProduction && "Lax",
+        httpOnly: true
+      }
+    })
+  );
+
+app.use(routes);
+
 
 // Catch unhandled requests and forward to error handler.
-app.use((req, res, next) => {
+app.use((_req, _res, next) => {
   const err = new Error("The requested resource couldn't be found.");
   err.title = "Resource Not Found";
   err.errors = { message: "The requested resource couldn't be found." };
@@ -78,14 +70,12 @@ app.use((err, _req, _res, next) => {
 
 // Error formatter
 app.use((err, _req, res, _next) => {
-  res.status(err.status || 500);
+  const { statusCode, message, errors } = err
   console.error(err);
-  res.json({
-    title: err.title || 'Server Error',
-    message: err.message,
-    errors: err.errors,
+  res.status(statusCode || 500).json({   
+    message ,
+    errors,
     stack: isProduction ? null : err.stack
   });
 });
-
 module.exports = app;

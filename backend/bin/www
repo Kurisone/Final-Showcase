@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+
 // Import environment variables
 require('dotenv').config();
 

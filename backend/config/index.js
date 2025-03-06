@@ -5,12 +5,7 @@ module.exports = {
     dbFile: process.env.DB_FILE,
     jwtConfig: {
       secret: process.env.JWT_SECRET,
-      expiresIn: process.env.JWT_EXPIRES_IN 
+      expiresIn: process.env.JWT_EXPIRES_IN
     }
-  }; 
-
+  };
   
-
-
-
-
