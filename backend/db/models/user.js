@@ -1,50 +1,35 @@
 'use strict';
-const { Model, DataTypes } = require('sequelize');
 
-module.exports = (sequelize) => {
+const { Model, Validator } = require('sequelize');
+
+
+module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
-      // define association here
-
-      User.hasMany(models.Spot, {
-        foreignKey: 'ownerId', as: 'Owner'
+      User.hasMany(models.Spot,{
+        foreignKey: "ownerId"
       });
-      
-      User.hasMany(models.Review, {
-        foreignKey: 'userId'
-      });
-  
       User.hasMany(models.Booking, {
-        foreignKey: 'userId'
+        foreignKey:"userId"
       });
-
+      User.hasMany(models.Review, {
+        foreignKey:"userId"
+      });
     }
   }
 
-  User.init(
-    {
+
+  User.init({
       firstName: {
-        type: DataTypes.STRING(256),
+        type: DataTypes.STRING,
         allowNull: false,
       },
-
       lastName: {
-        type: DataTypes.STRING(256),
+        type: DataTypes.STRING,
         allowNull: false,
-      },
-
-      email: {
-        type: DataTypes.STRING(256),
-        allowNull: false,
-        unique: true,
-        validate: {
-          len: [3, 256],
-          isEmail: true,
-        },
-
       },
       username: {
-        type: DataTypes.STRING(30),
+        type: DataTypes.STRING,
         allowNull: false,
         unique: true,
         validate: {
@@ -56,25 +41,28 @@ module.exports = (sequelize) => {
           },
         },
       },
+      email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true,
+        validate: {
+          len: [3, 256],
+          isEmail: true,
+        },
+      },
       hashedPassword: {
         type: DataTypes.STRING.BINARY,
         allowNull: false,
         validate: {
           len: [60, 60],
         },
-      },
+      }
+      
     },
     {
       sequelize,
       modelName: 'User',
-      // schema: process.env.SCHEMA || 'protocol_3', // Define schema here
-      defaultScope: {
-        attributes: {
-          exclude: ['hashedPassword', 'email', 'createdAt', 'updatedAt'],
-        },
-      },
     }
   );
-
   return User;
 };
