@@ -10,7 +10,7 @@ const { ValidationError } = require('sequelize');
 const routes = require('./routes');
 
 const { environment, port } = require('./config');
-const isProduction = environment === 'production'
+const isProduction = environment === 'production';
 const app = express();
 
 app.use(morgan('dev'));
@@ -19,44 +19,48 @@ app.use(express.json());
 
 // Security Middleware
 if (!isProduction) {
-    // enable cors only in development
-    app.use(cors());
-  }
-
-  // helmet helps set a variety of headers to better secure your app
+  // Enable CORS only in development
   app.use(
-    helmet.crossOriginResourcePolicy({
-      policy: "cross-origin"
+    cors({
+      origin: 'http://localhost:5173', 
+      credentials: true, 
     })
   );
+}
 
+// Helmet helps set a variety of headers to better secure your app
+app.use(
+  helmet.crossOriginResourcePolicy({
+    policy: 'cross-origin',
+  })
+);
 
-  // Set the _csurf token and create req.csrfToken method
-  app.use(
-   csurf({
-      cookie: {
-        secure: isProduction,
-        sameSite: isProduction && "Lax",
-        httpOnly: true
-      }
-    })
-  );
+// Set the _csrf token and create req.csrfToken method
+app.use(
+  csurf({
+    cookie: {
+      secure: isProduction,
+      sameSite: isProduction && 'Lax',
+      httpOnly: true,
+    },
+  })
+);
 
+// Apply routes after csurf middleware
 app.use(routes);
 
-
-// Catch unhandled requests and forward to error handler.
+// Catch unhandled requests and forward to error handler
 app.use((_req, _res, next) => {
   const err = new Error("The requested resource couldn't be found.");
-  err.title = "Resource Not Found";
+  err.title = 'Resource Not Found';
   err.errors = { message: "The requested resource couldn't be found." };
   err.status = 404;
   next(err);
 });
 
-// Process sequelize errors
+// Process Sequelize errors
 app.use((err, _req, _res, next) => {
-  // check if error is a Sequelize error:
+  // Check if error is a Sequelize error
   if (err instanceof ValidationError) {
     let errors = {};
     for (let error of err.errors) {
@@ -70,12 +74,13 @@ app.use((err, _req, _res, next) => {
 
 // Error formatter
 app.use((err, _req, res, _next) => {
-  const { statusCode, message, errors } = err
+  const { statusCode, message, errors } = err;
   console.error(err);
-  res.status(statusCode || 500).json({   
-    message ,
+  res.status(statusCode || 500).json({
+    message,
     errors,
-    stack: isProduction ? null : err.stack
+    stack: isProduction ? null : err.stack,
   });
 });
+
 module.exports = app;
