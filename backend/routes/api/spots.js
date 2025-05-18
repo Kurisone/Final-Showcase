@@ -122,6 +122,25 @@ router.get('/:spotId', async (req, res, next) => {
     if(!spot){
       res.status(404).json({ 'message': "Spot couldn't be found" });
     }
+
+        // Get avgStarRating
+    const reviews = await Review.findAll({
+      where: { spotId: id },
+      attributes: ['stars']
+    });
+
+    const totalStars = reviews.reduce((sum, r) => sum + r.stars, 0);
+    const avgStarRating = reviews.length ? (totalStars / reviews.length).toFixed(2) : null;
+
+    // Prepare response object
+    const spotData = spot.toJSON();
+
+    // Add previewImage
+    const preview = spotData.SpotImages.find(img => img.preview);
+    spotData.previewImage = preview ? preview.url : null;
+
+    spotData.avgStarRating = avgStarRating;
+
      res.json({'Spot': spot});
   } catch (err) {
   console.log(err)
