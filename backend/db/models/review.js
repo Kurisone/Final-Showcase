@@ -15,36 +15,66 @@ module.exports = (sequelize, DataTypes) => {
       });
     };
   };
-  Review.init(
-    {
-      spotId: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'Spots'
-       }, 
-       onDelete:"CASCADE",
-      },
-      userId: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'Users'
+  Review.init({
+    spotId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'spotId cannot be null'
         },
-        onDelete: "CASCADE",
-      },
-      review: {
-        type: DataTypes.STRING,
-      },
-      stars: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
+        isInt: {
+          msg: 'spotId must be an integer'
+        }
+      }
     },
-    {
-      sequelize,
-      modelName: "Review",
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'userId cannot be null'
+        },
+        isInt: {
+          msg: 'userId must be an integer'
+        }
+      }
+    },
+    review: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Review text cannot be empty'
+        },
+        notEmpty: {
+          msg: 'Review text cannot be empty'
+        }
+      }
+    },
+    stars: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Stars cannot be null'
+        },
+        isInt: {
+          msg: 'Stars must be an integer'
+        },
+        min: {
+          args: [1],
+          msg: 'Stars must be between 1 and 5'
+        },
+        max: {
+          args: [5],
+          msg: 'Stars must be between 1 and 5'
+        }
+      }
     }
-  );
+  }, {
+    sequelize,
+    modelName: 'Review',
+  });
   return Review;
 };
