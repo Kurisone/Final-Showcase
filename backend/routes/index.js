@@ -1,26 +1,30 @@
-// backend/routes/index.js
+//routes/index.js
 const express = require('express');
 const router = express.Router();
 const apiRouter = require('./api');
 
+// API routes
 router.use('/api', apiRouter);
 
-
-
-
-router.get("/api/csrf/restore", (req, res) => {
-    const csrfToken = req.csrfToken();
-
-
-    res.cookie("XSRF-TOKEN", csrfToken, {
-      httpOnly: false,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict"
-    });
-
-    res.status(200).json({
-      'XSRF-Token': csrfToken
-    });
+// Static routes for production
+if (process.env.NODE_ENV === 'production') {
+  const path = require('path');
+  
+  router.get('/', (req, res) => {
+    res.cookie('XSRF-TOKEN', req.csrfToken());
+    res.sendFile(
+      path.resolve(__dirname, '../../frontend', 'dist', 'index.html')
+    );
   });
+
+  router.use(express.static(path.resolve('../frontend/dist')));
+
+  router.get(/^(?!\/?api).*/, (req, res) => {
+    res.cookie('XSRF-TOKEN', req.csrfToken());
+    res.sendFile(
+      path.resolve(__dirname, '../../frontend', 'dist', 'index.html')
+    );
+  });
+}
 
 module.exports = router;

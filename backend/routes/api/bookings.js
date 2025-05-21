@@ -1,3 +1,4 @@
+//api/bookings.js
 const express = require('express');
 const { requireAuth } = require('../../utils/auth');
 const { Booking, Spot, User } = require('../../db/models');
@@ -111,7 +112,7 @@ router.get('/current', requireAuth, async (req, res) => {
 
 // Create a new booking at a spot based on the spotId
 
-router.post('//:spotId/bookings', requireAuth, validateBooking, checkBookingConflicts, async (req, res) => {
+router.post('/:spotId/bookings', requireAuth, validateBooking, checkBookingConflicts, async (req, res) => {
   const { id } = req.user;
   const { spotId } = req.params;
   const { startDate, endDate } = req.body;

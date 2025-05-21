@@ -1,3 +1,4 @@
+//api/spotimages.js
 const express = require('express');
 
 const { requireAuth } = require('../../utils/auth');

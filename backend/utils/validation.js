@@ -1,4 +1,4 @@
-//backend/utils/validation.js
+// backend/utils/validation.js
 const { validationResult } = require('express-validator');
 
 // middleware for formatting errors from express-validator middleware
@@ -12,10 +12,10 @@ const handleValidationErrors = (req, _res, next) => {
       .array()
       .forEach(error => errors[error.path] = error.msg);
 
-    const err = Error("Bad Request");
+    const err = Error("Bad request.");
     err.errors = errors;
     err.status = 400;
-    
+    err.title = "Bad request.";
     next(err);
   }
   next();
