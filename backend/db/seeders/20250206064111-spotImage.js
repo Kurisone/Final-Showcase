@@ -11,7 +11,7 @@ module.exports = {
     await SpotImage.bulkCreate ([
       {
         spotId: 1,
-        url: "https://www.google.com/local/place/fid/0x8620a66d391f6fb5:0x2160af1c86344b48/photosphere?iu=https://lh3.googleusercontent.com/p/AF1QipMxurDG1NaMdfVPipXcCf_V8nTZq6aRayAh19co%3Dw160-h106-k-no-pi-0-ya23.163603-ro-0-fo100&ik=CAoSLEFGMVFpcE14dXJERzFOYU1kZlZQaXBYY0NmX1Y4blRacTZhUmF5QWgxOWNv"
+        url: "https://www.tfhmagazine.com/-/media/Project/OneWeb/TFH/US/articles/648_the_audubon_aquarium_of_the_americas.jpg?h=355&iar=0&w=755&hash=4A036D671CE607E1FA509FE087E4F649"
        ,preview: "true",
       },
       {
@@ -41,7 +41,7 @@ module.exports = {
       },
       {
         spotId: 7,
-        url: "https://www.google.com/imgres?q=buc-ee%27s&imgurl=https%3A%2F%2Fwww.cincinnati.com%2Fgcdn%2Fpresto%2F2023%2F08%2F28%2FPMJS%2F0824ac25-3aef-476b-a883-7594470250c6-Bucees.PNG%3Fcrop%3D860%2C645%2Cx107%2Cy0&imgrefurl=https%3A%2F%2Fwww.cincinnati.com%2Fstory%2Fentertainment%2Fdining%2F2024%2F08%2F27%2Fbuc-ees-popularity-explained%2F73417471007%2F&docid=XvCG2rbTnfbyDM&tbnid=PHxEABNRaBYCOM&vet=12ahUKEwiF2ffL3LiLAxXlSTABHdwUAlsQM3oFCIEBEAA..i&w=860&h=645&hcb=2&ved=2ahUKEwiF2ffL3LiLAxXlSTABHdwUAlsQM3oFCIEBEAA",
+        url: "https://www.cincinnati.com/gcdn/presto/2023/08/28/PMJS/0824ac25-3aef-476b-a883-7594470250c6-Bucees.PNG?crop=860,645,x107,y0",
         preview: "true",
       },
       {
@@ -51,12 +51,12 @@ module.exports = {
       },
       {
         spotId: 9,
-        url: "https://www.google.com/imgres?q=caesars%20superdome&imgurl=https%3A%2F%2Fblog.ticketmaster.com%2Fwp-content%2Fuploads%2Fstep-inside-caesars-superdome.png&imgrefurl=https%3A%2F%2Fblog.ticketmaster.com%2Fstep-inside-caesars-superdome-new-orleans-la%2F&docid=X-MuUq2uas230M&tbnid=t4CNgZIINT6cNM&vet=12ahUKEwjmof2F3biLAxXWTjABHQLLCrIQM3oECBwQAA..i&w=1024&h=576&hcb=2&ved=2ahUKEwjmof2F3biLAxXWTjABHQLLCrIQM3oECBwQAA",
+        url: "https://blog.ticketmaster.com/wp-content/uploads/step-inside-caesars-superdome.png",
         preview: "true",
       },
       {
         spotId: 10,
-        url: "https://www.google.com/imgres?q=audubon%20zoo&imgurl=https%3A%2F%2Fwww.tclf.org%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Ffull_width%2Fpublic%2Fthumbnails%2Fimage%2FAudubonZoo_feature_2016_KyleJacobson-PeterSummerlin_004.jpg%3Fitok%3DMkfVffQu&imgrefurl=https%3A%2F%2Fwww.tclf.org%2Flandscapes%2Faudubon-zoo&docid=fdKdZAVLZkaCuM&tbnid=32wXIfK_Qr15TM&vet=12ahUKEwj2hq-b3biLAxVyjLAFHQtGC58QM3oECGQQAA..i&w=1200&h=675&hcb=2&ved=2ahUKEwj2hq-b3biLAxVyjLAFHQtGC58QM3oECGQQAA",
+        url: "https://www.tclf.org/sites/default/files/styles/full_width/public/thumbnails/image/AudubonZoo_feature_2016_KyleJacobson-PeterSummerlin_004.jpg?itok=MkfVffQu",
         preview: "true",
       },
 
